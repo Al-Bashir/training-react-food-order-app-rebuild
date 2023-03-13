@@ -1,0 +1,29 @@
+.section-meals {
+    max-width: 90%;
+    width: 60rem;
+    margin: 2rem auto;
+    animation: meals-appearance 1s ease-out forwards;
+}
+
+.section-meals ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-meals ul > li:last-child{
+    border: none;
+}
+
+
+@keyframes meals-appearance {
+    from {
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
