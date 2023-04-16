@@ -1,7 +1,19 @@
-import styles from './Cart.module.css';
+import styles from './CartItem.module.css';
 
 const CartItem = (props) => {
-    const price = `$${props.price.toFixed(2)}`;
+    const price = `$${props.price}`;
+    const addItemHandler = () =>{
+        const mealItem = {
+            id: props.id,
+            name: props.name,
+            price: props.price,
+            amount: parseInt(1)
+        }
+        props.onAdd(mealItem)
+    }
+    const removeItemHandler = () => {
+        props.onRemove(props.id)
+    }
 
     return (
         <li className={styles['cart-item']}>
@@ -13,8 +25,8 @@ const CartItem = (props) => {
                 </div>
             </div>
             <div className={styles.actions}>
-                <button onClick={props.onRemove}>−</button>
-                <button onClick={props.onAdd}>+</button>
+                <button onClick={removeItemHandler}>−</button>
+                <button onClick={addItemHandler}>+</button>
             </div>
         </li>
     );

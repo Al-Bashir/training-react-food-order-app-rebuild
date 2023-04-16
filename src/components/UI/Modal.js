@@ -1,9 +1,12 @@
 import styles from './Modal.module.css';
 import ReactDOM from 'react-dom';
+import { useContext } from 'react';
+import CartContext from '../../context/Cart-Context';
 
 const BackDrop = () => {
+    const { hideCart } = useContext(CartContext);
     return (
-        <div className={styles['back-drop']}></div>
+        <div className={styles['back-drop']} onClick={hideCart}></div>
     )
 }
 

@@ -1,12 +1,21 @@
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import styles from './MealItemForm.module.css';
 import Input from '../../UI/input';
+import CartContext from '../../../context/Cart-Context';
 
 const MealItemForm = (props) => {
+    const {addItem} = useContext(CartContext)
     const inputRef = useRef()
+    
     const FormSubmitHandler = (event) =>{
-        console.log(inputRef.current.value)
         event.preventDefault();
+        const mealItem = {
+            id: props.mealData.id,
+            name: props.mealData.name,
+            price: props.mealData.price,
+            amount: parseInt(inputRef.current.value)
+        }
+        addItem(mealItem)
     }
 
     return (

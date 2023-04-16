@@ -20,46 +20,55 @@ const cartReducer = (state, action) => {
     })
     switch (action.type) {
         case 'ADD_ITEM':
-            totalAmount += action.item.price;
             if(duplicatedItem){
+                totalAmount = totalAmount + (action.item.amount * action.item.price);
                 duplicatedItem.amount += action.item.amount;
                 updatedItems[duplicatedIndex] = duplicatedItem;
             }else{
-                updatedItems.concat(action.item)
+                totalAmount = totalAmount + (action.item.amount * action.item.price);
+                updatedItems.push(action.item)
             }
             return{
                 items: updatedItems,
                 totalAmount: totalAmount,
             }
         case 'REMOVE_ITEM':
-            totalAmount -= action.item.price;
-            if(duplicatedItem){
+            totalAmount -= duplicatedItem.price;
+            let filteredRemovedItems = [];
+            if(updatedItems[duplicatedIndex].amount > 1){
+                duplicatedItem.amount -= 1;
                 updatedItems[duplicatedIndex] = duplicatedItem;
+                return{
+                    items: updatedItems,
+                    totalAmount: totalAmount,
+                }
             }else{
-                updatedItems.filter(element => element.id !== action.item.id)
-            }
-            return{
-                items: updatedItems,
-                totalAmount: totalAmount,
+                filteredRemovedItems = [...updatedItems.filter(element => element.id !== action.item.id)]
+                return{
+                    items: filteredRemovedItems,
+                    totalAmount: totalAmount,
+                }
             }
         default:
             break;
     }
 }
 
-const CartProvider = () => {
-    const [cart, dispatchCart] = useReducer(defaultCartState, cartReducer);
+const CartProvider = (props) => {
+    const [cart, dispatchCart] = useReducer(cartReducer, defaultCartState);
     const [cartState, setCartState] = useState(false);
-
+    const [isCartChange, setIsCartChange] = useState(false);
 
     const addItem = (item) => {
         dispatchCart({type: 'ADD_ITEM', item: item})
+        setIsCartChange(true);
     }
     const removeItem = (id) => {
         const item = {
             id: id
         }
         dispatchCart({type: 'REMOVE_ITEM', item: item})
+        setIsCartChange(true);
     }
 
     const showCart = () => {
@@ -73,10 +82,12 @@ const CartProvider = () => {
         items: cart.items,
         totalAmount: cart.totalAmount,
         cartState: cartState,
+        isCartChange: isCartChange,
+        setIsCartChange: setIsCartChange,
         showCart: showCart,
         hideCart: hideCart,
         addItem: addItem,
-        removeItem: removeItem
+        removeItem: removeItem,
     }
 
     return <CartContext.Provider value={providedData}> {props.children} </CartContext.Provider>
