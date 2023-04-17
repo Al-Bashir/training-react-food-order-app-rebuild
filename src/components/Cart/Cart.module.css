@@ -47,7 +47,7 @@
     text-align: right;
 }
 
-.actions button {
+.actions button, .order-confirmed button{
     font: inherit;
     cursor: pointer;
     background-color: transparent;
@@ -58,17 +58,68 @@
 }
 
 .actions button:hover,
-.actions button:active {
+.actions button:active,
+.order-confirmed button:hover,
+.order-confirmed button:active{
     background-color: #5a1a01;
     border-color: #5a1a01;
     color: white;
 }
 
-.actions .button--alt {
+.actions .button--alt, .order-confirmed .button--alt{
     color: #8a2b06;
 }
 
-.actions .button {
+.actions .button,  .order-confirmed .button{
     background-color: #8a2b06;
     color: white;
+}
+
+.order-confirmed button{
+    margin-left: 0;
+    margin-top: 0.83em;
+}
+
+.order-confirmed{
+    text-align: center;
+}
+
+.order-confirmed span {
+    font-weight: bold;
+    color: #8a2b06;
+}
+
+
+.error-occurred {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.spinner-div {
+    color: #8a2b06;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.spinner-div svg{
+    transition-property: transform;
+    animation-name: rotate;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

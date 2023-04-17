@@ -12,12 +12,14 @@ const cartReducer = (state, action) => {
     const updatedItems = [...state.items];
     let duplicatedItem = null;
     let duplicatedIndex = null;
-    state.items.forEach((item, index) => {
-        if(item.id === action.item.id){
-            duplicatedItem = {...item};
-            duplicatedIndex = index;
-        }
-    })
+    if(action.type !== 'RESET_CART'){
+        state.items.forEach((item, index) => {
+            if(item.id === action.item.id){
+                duplicatedItem = {...item};
+                duplicatedIndex = index;
+            }
+        })
+    }
     switch (action.type) {
         case 'ADD_ITEM':
             if(duplicatedItem){
@@ -49,6 +51,11 @@ const cartReducer = (state, action) => {
                     totalAmount: totalAmount,
                 }
             }
+        case 'RESET_CART':
+            return{
+                items: [],
+                totalAmount: 0
+            }
         default:
             break;
     }
@@ -78,6 +85,10 @@ const CartProvider = (props) => {
         setCartState(false)
     }
 
+    const resetCart = () => {
+        dispatchCart({type: 'RESET_CART'})
+    }
+
     const providedData = {
         items: cart.items,
         totalAmount: cart.totalAmount,
@@ -88,6 +99,7 @@ const CartProvider = (props) => {
         hideCart: hideCart,
         addItem: addItem,
         removeItem: removeItem,
+        resetCart: resetCart
     }
 
     return <CartContext.Provider value={providedData}> {props.children} </CartContext.Provider>

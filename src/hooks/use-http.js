@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 const useHttp = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState({isError: false, massage: ''});
+    const [isError, setIsError] = useState({isError: false, message: ''});
 
     const fetchData = useCallback( async (processFunc, url, headerBody) => {
         setIsLoading(true);
@@ -11,7 +11,7 @@ const useHttp = () => {
         try{
             const response = await fetch(url, requestHeaderBody);
             if(!response.ok){
-                throw new Error(`Request failed! - Error code ${response.status}`);
+                throw new Error(`Request failed! - Error code: ${response.status}`);
             }
             const data = await response.json();
             processFunc(data)
@@ -19,7 +19,7 @@ const useHttp = () => {
             console.log(error);
             setIsError({
                 isError: true,
-                message: error.message || 'Something went wrong!',
+                message: error.message,
             })
         }
         setIsLoading(false);

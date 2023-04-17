@@ -11,10 +11,32 @@
     padding: 0;
 }
 
-.section-meals ul > li:last-child{
+.section-meals ul>li:last-child {
     border: none;
 }
 
+.error-occurred {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-top: 2rem;
+}
+
+.spinner-div {
+    color: whitesmoke;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.spinner-div svg{
+    transition-property: transform;
+    animation-name: rotate;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
 
 @keyframes meals-appearance {
     from {
@@ -25,5 +47,15 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
