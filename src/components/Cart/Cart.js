@@ -41,7 +41,7 @@ const Cart = () => {
             <>
                 {isLoading && <div className={styles['spinner-div']}>
                 <Spinner color={"#8a2b06"}/>
-                <p>Loading...</p>
+                <p>Sending order data...</p>
                 </div>}
                 {isError.isError && <div className={styles['error-occurred']}>Error: {isError.message} </div>}
                 {!isLoading && !isError.isError && <div className={styles['order-confirmed']}>
